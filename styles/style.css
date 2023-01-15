@@ -1,0 +1,66 @@
+:root {
+    --blue: #5696dc;
+    --yellow: #d5dc35;
+    --orange: #ce9d28;
+    --green: #98bf3f;
+    --red: #c53a2b;
+    --dark-blue: #26244f;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Montserrat', sans-serif;
+}
+body {
+    background: linear-gradient(5deg, var(--dark-blue), black);
+    height: 100vh;
+}
+header {
+}
+header img {
+    width: 90%;
+    margin: 50px 5% 10px 5%;
+}
+main li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 8px 2px black;
+    list-style: none;
+    
+}
+main ul :hover {
+    background-color: rgb(95, 95, 95);
+}
+.button {
+    font-size: 3.5rem;
+    text-decoration: none;
+    color: white;
+}
+main ul span {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.nueva-partida span {
+    background-image: url(../assets/icons/pencil.png);
+
+}
+.solo-cartas span {
+    background-image: url(../assets/icons/card.png);
+}
