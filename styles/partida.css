@@ -4,7 +4,9 @@
     --orange: #ce9d28;
     --green: #98bf3f;
     --red: #c53a2b;
+    --morado: blueviolet;
     --dark-blue: #26244f;
+    --darker-blue: #1a1735;
     --light: 300;
     --medium: 500;
     --bold: 700; 
@@ -61,7 +63,7 @@ main {
     background-color: var(--red);
 }
 .libre {
-    background-color: blueviolet;
+    background-color: var(--morado);
 }
 .vacio1 {
     grid-area: 1/5/3/6;
@@ -123,7 +125,7 @@ main {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 30px;
-    background-color: #110f22;
+    background-color: var(--darker-blue);
 }
 /*use 90px para los iconos*/
 .tablero-botones button {
@@ -132,7 +134,7 @@ main {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    background-color: #22204e;
+    background-color: var(--dark-blue);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -176,7 +178,7 @@ main {
     justify-content: center;
     height: 100vh;
     scroll-snap-align: start;
-    background-color: #110f22;
+    background-color: var(--darker-blue);
 
 }
 .tarjeta {
