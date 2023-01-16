@@ -17,6 +17,9 @@ html {
     font-size: 62.5%;
     font-family: 'Montserrat', sans-serif;
 }
+button {
+    font-family: 'Montserrat', sans-serif;
+}
 body {
     background: linear-gradient(5deg, var(--dark-blue), black);
     height: 100vh;
