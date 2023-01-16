@@ -4,7 +4,9 @@
     --orange: #ce9d28;
     --green: #98bf3f;
     --red: #c53a2b;
-    --dark-blue: #26244f;
+    --dark-blue: #0f0f0f;
+    --theme-blue: #0d0a36;
+
 }
 
 * {
@@ -21,10 +23,11 @@ button {
     font-family: 'Montserrat', sans-serif;
 }
 body {
-    background: linear-gradient(5deg, var(--dark-blue), black);
+    background-color: var(--dark-blue);
     height: 100vh;
 }
 header {
+    background: linear-gradient(0deg, var(--dark-blue), var(--theme-blue));
 }
 header img {
     width: 90%;
@@ -36,11 +39,10 @@ main li {
     justify-content: center;
     align-items: center;
     margin: 30px;
-    border-radius: 5px;
+    border-radius: 8px;
     text-align: center;
-    box-shadow: 0 0 8px 2px black;
     list-style: none;
-    
+    border: 1px solid white;
 }
 main a:hover {
     background-color: rgb(95, 95, 95);
