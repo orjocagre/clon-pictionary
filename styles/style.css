@@ -36,18 +36,18 @@ main li {
     justify-content: center;
     align-items: center;
     margin: 30px;
-    padding: 20px;
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 0 8px 2px black;
     list-style: none;
     
 }
-main ul :hover {
+main a:hover {
     background-color: rgb(95, 95, 95);
 }
 .button {
     font-size: 3.5rem;
+    padding: 20px;
     text-decoration: none;
     color: white;
 }
