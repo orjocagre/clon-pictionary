@@ -8,7 +8,7 @@
     --dark-blue: #272727;
     --darker-blue: #0f0f0f;
     --white: #f1f1f1;
-    --theme-blue: #0d0a36;
+    --theme-blue: #0e0953;
     --light: 300;
     --medium: 500;
     --bold: 700; 
@@ -165,11 +165,11 @@ main {
     font-size: 2.8rem;
 }
 .jugador-1 {
-    background-image: url(../assets/icons/equis-negra.png);
+    background-image: url(../assets/icons/equis-clara.png);
 
 }
 .jugador-2 {
-    background-image: url(../assets/icons/circulo-negro.png);
+    background-image: url(../assets/icons/circulo-claro.png);
 
 }
 .jugador span {
