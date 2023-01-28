@@ -1,20 +1,26 @@
 :root {
-    --blue: #5696dc;
-    --yellow: #d5dc35;
-    --orange: #ce9d28;
-    --green: #98bf3f;
-    --red: #c53a2b;
-    --dark-blue: #0f0f0f;
-    --theme-blue: #0e0953;
 
+    --blue: #0D7DFF;
+    --yellow: #0CE83C;
+    --orange: #FFE300;
+    --green: #E8520C;
+    --red: #D400FF;
+    --morado: blueviolet;
+    --white: white;
+    --theme-dark: #0e0953;
+    --theme-light: #f0f0f0;
+    --light: 300;
+    --medium: 500;
+    --bold: 700;
 }
-
+/*font-family: 'Cormorant Garamond', serif;
+font-family: 'Kalam', cursive;
+font-family: 'Montserrat', sans-serif;*/
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-
 html {
     font-size: 62.5%;
     font-family: 'Montserrat', sans-serif;
@@ -22,42 +28,45 @@ html {
 button {
     font-family: 'Montserrat', sans-serif;
 }
-body {
-    background-color: var(--dark-blue);
-    height: 100vh;
-}
 header {
-    background: linear-gradient(0deg, var(--dark-blue), var(--theme-blue));
-}
-header img {
-    width: 90%;
-    margin: 50px 5% 10px 5%;
-}
-main li {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 30px;
-    border-radius: 8px;
     text-align: center;
+    box-shadow: 0 0 8px 2px black;
+}
+header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: var(--bold);
+    font-size: 4rem;
+    padding: 30px;
+    color: var(--theme-dark);
+}
+main a {
+    margin: 30px;
     list-style: none;
-    border: 1px solid white;
+    background-color: var(--theme-light);
+    border-radius: 10px;
 }
 main a:hover {
     background-color: rgb(95, 95, 95);
 }
-.button {
+.boton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
     font-size: 3.5rem;
+    font-weight: var(--bold);
     padding: 20px;
     text-decoration: none;
-    color: white;
+    color: var(--theme-dark);
 }
 main ul span {
     display: inline-block;
+    display: none;
     width: 80px;
     height: 80px;
-    margin: 10px;
+    min-width: 80px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -68,4 +77,25 @@ main ul span {
 }
 .solo-cartas span {
     background-image: url(../assets/icons/card.png);
+}
+.nuevo-juego {
+    background-color: var(--yellow);
+}
+.continuar-juego {
+    background-color: var(--blue);
+}
+.solo-cartas {
+    background-color: var(--red);
+
+}
+.instrucciones {
+    background-color: var(--green);
+
+}
+.informacion {
+    background-color: var(--orange);
+
+}
+img {
+    display: none;
 }

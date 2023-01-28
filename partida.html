@@ -9,15 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/partida.css">
+    <link rel="stylesheet" href="./styles/partida-tablet.css" media="(min-width: 425px)">
+    <link rel="stylesheet" href="./styles/partida-laptop.css" media="(min-width: 1024px)">
 </head>
 <body>
     <header>
     </header>
     <main>
-        
-        <section class="tablero-container">
-            <div class="tablero">
-                <div class="casilla vacio vacio1"></div>
+        <section class="tablero">
+            <div class="casilla vacio vacio1"></div>
                 <div class="casilla vacio vacio2"></div>
                 <div class="casilla vacio vacio3"></div>
                 <div class="casilla vacio vacio4"></div>
@@ -77,19 +77,23 @@
                 
                 <img class="marcador marcador-1" src="./assets/icons/circulo.png" alt="">
                 <img class="marcador marcador-2" src="./assets/icons/equis.png" alt="">
-            </div>
-            <div class="tablero-botones">
-                <button class="jugador jugador-1">JOSE - PEDRO <span></span></button>
-                <button class="jugador jugador-2">ANA - MARCO <span></span></button>
-                <button class="temporizador">INICIAR <span></span></button>
-            </div>
+                <img class="marcador marcador-3" src="./assets/icons/rombo.png" alt="">
+                <img class="marcador marcador-4" src="./assets/icons/cruz.png" alt="">
+            
+            
+        </section>
+        <section class="controles">
+            <button class="controles--boton controles--boton__jugador1">JOSE - PEDRO<span></span></button>
+            <button class="controles--boton controles--boton__jugador2">ANA - MARCO<span></span></button>
+            <button class="controles--boton controles--boton__jugador3">MATEO - MARIA<span></span></button>
+            <button class="controles--boton controles--boton__jugador4">ESTEFANI - MAYRA<span></span></button>
+            <button class="controles--boton controles--boton__temporizador">INICIAR <span></span></button>
 
         </section>
-
-        <section class="contenedor-tarjeta">
-            <div class="tarjeta">
-                <div class="tarjetas">
-                    <img src="./assets/icons/pictionary-logo.png" alt="pictionary logo">
+        <section class="baraja">
+            <div class="baraja--tarjeta">
+                <div class="baraja--lado-tarjeta">
+                    <h2>PICTIONARY</h2>
     
                     <p class="persona">perro</p>
                     <p class="objeto">trompeta</p>
@@ -97,9 +101,8 @@
                     <p class="dificil">pedante</p>
                     <p class="todos">esquisofrenia</p>
                 </div>
-                <div class="tarjetas">
-                    <img src="./assets/icons/pictionary-logo.png" alt="pictionary logo">
-    
+                <div class="baraja--lado-tarjeta">
+                    <h2>PICTIONARY</h2>
                     <p class="persona">jamaica</p>
                     <p class="objeto">gorra</p>
                     <p class="accion">dormir</p>
@@ -107,7 +110,7 @@
                     <p class="todos">acantilado</p>
                 </div>
             </div>
-            <div class="botones-tarjeta">
+            <div class="baraja--botones">
                 <button>NUEVA</button>
             </div>
         </section>
