@@ -1,0 +1,59 @@
+main {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.tablero {
+    grid-area: 1/1/3/2;
+    height: 100vh;
+    width: 100vh;
+}
+.marcador {
+    width: calc((100vh - 20px - (4px * 9))/9);
+    height: calc((100vh - 20px - (4px * 9))/9);
+}
+.controles {
+    width: calc(100vw - 100vh);
+    max-height: none;
+    height: 100%;
+    grid-row-start: 1;
+    grid-column-start: 2;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    padding-bottom: 25px;
+}
+.controles--boton__temporizador {
+    grid-column-start: 3;
+    grid-row: 1/3;
+}
+.baraja {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    height: auto;
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: flex-end;
+}
+.baraja--tarjeta {
+    width: 60%;
+    height: 100%;
+    padding-right: 30px;
+}
+.baraja--lado-tarjeta {
+    width: 50%;
+    min-width: 100px;
+    margin-top: 0;
+}
+.baraja--lado-tarjeta h2 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+.baraja--lado-tarjeta p {
+    font-size: 2rem;
+}
+.baraja--botones {
+    width: 40%;
+}
+.baraja--botones button{
+    width: 100%;
+}

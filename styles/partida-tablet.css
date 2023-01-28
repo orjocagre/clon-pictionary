@@ -1,0 +1,8 @@
+.tablero-botones button {
+    flex-direction: row;
+    font-size: 3rem;
+    background-size: contain;
+}
+.tablero-botones .temporizador {
+    font-size: 3rem;
+}

@@ -1,0 +1,66 @@
+:root {
+    --blue: #0D7DFF;
+    --yellow: #0CE83C;
+    --orange: #FFE300;
+    --green: #E8520C;
+    --red: #D400FF;
+    --morado: blueviolet;
+    --white: white;
+    --theme-dark: #0e0953;
+    --theme-light: #f0f0f0;
+    --light: 300;
+    --medium: 500;
+    --bold: 700; 
+}
+header {
+    height: 70px;
+    text-align: start;
+}
+header p{
+    padding: 10px;
+}
+main div{
+    position: relative;
+    margin: 20px auto;
+    width: 150vh;
+    height: calc(100vh - 120px);
+}
+main a {
+    margin: 0;
+    width: 300px;
+    height: 150px;
+}
+.nuevo-juego {
+    position: absolute;
+    top: 0%;
+    left: calc(50% - 150px);
+}
+.continuar-juego {
+    position: absolute;
+    top: calc(30%);
+    right: 0;
+}
+.solo-cartas {
+    position: absolute;
+    top: calc(30%);
+    left: 0%;
+
+}
+.instrucciones {
+    position: absolute;
+    bottom: 0;
+    left: calc(75% - 150px);
+}
+.informacion {
+    position: absolute;
+    bottom: 0;
+    left: calc(25% - 150px);
+}
+img {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: calc(50% - 100px);
+    top: calc(50% - 100px);
+
+}
