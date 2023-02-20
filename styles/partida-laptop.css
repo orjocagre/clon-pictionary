@@ -8,8 +8,8 @@ main {
     width: 100vh;
 }
 .marcador {
-    width: calc((100vh - 20px - (4px * 9))/9);
-    height: calc((100vh - 20px - (4px * 9))/9);
+    width: calc((100vh - 20px - (4px * 8))/9);
+    height: calc((100vh - 20px - (4px * 8))/9);
 }
 .controles {
     width: calc(100vw - 100vh);
