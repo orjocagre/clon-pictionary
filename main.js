@@ -1,4 +1,4 @@
-const numPlayers = 2;
+const numPlayers = 4;
 
 const boton__jugador1 = document.querySelector('.controles--boton__jugador1');
 const boton__jugador2 = document.querySelector('.controles--boton__jugador2');
@@ -60,11 +60,13 @@ function clickJugador1() {
                 boton__jugador4.style.display = 'none';
                 boton__jugador1.classList.add('aumentar4');
         }
-        boton__jugador1.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
-        dice = document.querySelector('.dice');
+        setTimeout(() => {
+            boton__jugador1.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            dice = document.querySelector('.dice');
+        },150)
     }
     else {
-        throwDice();       
+        throwDice(marcador1);       
     }
    
 }
@@ -90,11 +92,13 @@ function clickJugador2() {
                 boton__jugador4.style.display = 'none';
                 boton__jugador2.classList.add('aumentar4');
         }
-        boton__jugador2.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
-        dice = document.querySelector('.dice');
+        setTimeout(() => {
+            boton__jugador2.innerHTML = 'ANA - MARCO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            dice = document.querySelector('.dice');
+        },150)
     }
     else {
-        throwDice();
+        throwDice(marcador2);
     }
 
     
@@ -117,11 +121,13 @@ function clickJugador3() {
                 boton__jugador4.style.display = 'none';
                 boton__jugador3.classList.add('aumentar4');
         }
-        boton__jugador3.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
-        dice = document.querySelector('.dice');
+        setTimeout(() => {
+            boton__jugador3.innerHTML = 'MATEO - MARIA<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            dice = document.querySelector('.dice');
+        },150)
     }
     else {
-        throwDice();
+        throwDice(marcador3);
     }
 }
 function clickJugador4() {
@@ -140,15 +146,18 @@ function clickJugador4() {
                 boton__jugador1.style.display = 'none';
                 boton__jugador4.classList.add('aumentar4');
         }
-        boton__jugador4.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
-        dice = document.querySelector('.dice');
+        setTimeout(() => {
+            boton__jugador4.innerHTML = 'ESTEFANI - MAYRA<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            dice = document.querySelector('.dice');
+        },150)
+        
     }
     else {
-        throwDice();
+        throwDice(marcador4);
     }
 }
 
-function throwDice() {
+function throwDice(marcador) {
     /*
     1 = x-90
     2 = y90
@@ -162,7 +171,7 @@ function throwDice() {
     
     switch(numeroAleatorio) {
         case 1:
-            document.documentElement.style.setProperty('--gradosX','90deg');
+            document.documentElement.style.setProperty('--gradosX','-90deg');
             document.documentElement.style.setProperty('--gradosY','0deg');
             break;
         case 2:
@@ -188,6 +197,11 @@ function throwDice() {
     
     }
     dice.classList.add('lanzarDado');
+    setTimeout(() => {
+        moveToken(marcador,numeroAleatorio);
+
+    },10000);
+
 }
 
 function clickCancelar() {
@@ -325,16 +339,16 @@ function moveToken(marcador, numSpaces) {
     for(let i=0; i<numSpaces; i++) {
 
         if((position >= 0 && position < 2) || (position > 19 && position < 22) || (position > 28 && position < 32) || (position > 33 && position < 36) || (position > 37 && position < 41)) {
-            setTimeout(() => {moveTokenDown(marcador);}, 3200 * i);
+            setTimeout(() => {moveTokenDown(marcador);}, 350 * i);
         }
         else if((position > 1 && position < 5) || (position > 11 && position < 14) || (position > 31 && position < 34) || (position > 40 && position < 44)) {
-            setTimeout(() => {moveTokenLeft(marcador);}, 3200 * i);
+            setTimeout(() => {moveTokenLeft(marcador);}, 350 * i);
         }
         else if((position > 4 && position < 8) || (position > 9 && position < 12) || (position > 13 && position < 17) || (position > 23 && position < 26) || (position > 43 && position < 46)) {
-            setTimeout(() => {moveTokenUp(marcador);}, 3200 * i);
+            setTimeout(() => {moveTokenUp(marcador);}, 350 * i);
         }
         else if((position > 7 && position < 10) || (position > 16 && position < 20) || (position > 21 && position < 24) || (position > 25 && position < 29) || (position > 35 && position < 38)) {
-            setTimeout(() => {moveTokenRight(marcador);}, 3200 * i);
+            setTimeout(() => {moveTokenRight(marcador);}, 350 * i);
         }
         position++;
         marcador.setAttribute('pos', position);
@@ -347,7 +361,7 @@ function moveTokenDown(marcador) {
     setTimeout(() => {
         marcador.classList.remove('moveTokenDown');
         marcador.style.gridRow = (String)((Number)(getComputedStyle(marcador).gridRowStart) + 1);
-    },3000);
+    },300);
     
 }
 function moveTokenUp(marcador) {
@@ -355,20 +369,20 @@ function moveTokenUp(marcador) {
     setTimeout(function() {
         marcador.classList.remove('moveTokenUp');
         marcador.style.gridRow = (String)((Number)(getComputedStyle(marcador).gridRowStart) - 1);
-    }, 3000);
+    }, 300);
 }
 function moveTokenLeft(marcador) {
     marcador.classList.add('moveTokenLeft');
     setTimeout(() => {
         marcador.classList.remove('moveTokenLeft');
         marcador.style.gridColumn = (String)((Number)(getComputedStyle(marcador).gridColumnStart) - 1);
-    }, 3000);
+    }, 300);
 }
 function moveTokenRight(marcador) {
     marcador.classList.add('moveTokenRight');
     setTimeout(() => {
         marcador.classList.remove('moveTokenRight');
         marcador.style.gridColumn = (String)((Number)(getComputedStyle(marcador).gridColumnStart) + 1);
-    }, 3000);
+    }, 300);
 }
 

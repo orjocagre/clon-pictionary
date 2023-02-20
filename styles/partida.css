@@ -111,24 +111,24 @@ main {
     height: calc((100vw - 20px - (4px * 8))/9);
 }
 .moveTokenDown {
-    transition-duration: 3s;
-    transition-timing-function: linear;
-    transform: translateY(calc((100vh - 20px - (4px * 8))/9 + 4px));
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transform: translateY(calc((100vw - 20px - (4px * 8))/9 + 4px));
 }
 .moveTokenUp {
-    transition-duration: 3s;
-    transition-timing-function: linear;
-    transform: translateY(calc((100vh - 20px - (4px * 8))/-9 - 4px));
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transform: translateY(calc((100vw - 20px - (4px * 8))/-9 - 4px));
 }
 .moveTokenLeft {
-    transition-duration: 3s;
-    transition-timing-function: linear;
-    transform: translateX(calc((100vh - 20px - (4px * 8))/-9 - 4px));
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transform: translateX(calc((100vw - 20px - (4px * 8))/-9 - 4px));
 }
 .moveTokenRight {
-    transition-duration: 3s;
-    transition-timing-function: linear;
-    transform: translateX(calc((100vh - 20px - (4px * 8))/9 + 4px));
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transform: translateX(calc((100vw - 20px - (4px * 8))/9 + 4px));
 }
 .marcador-1 {
     grid-column: 4;
