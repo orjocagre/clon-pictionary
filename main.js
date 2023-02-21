@@ -1,4 +1,4 @@
-const numPlayers = 4;
+const numPlayers = 2;
 
 const boton__jugador1 = document.querySelector('.controles--boton__jugador1');
 const boton__jugador2 = document.querySelector('.controles--boton__jugador2');
@@ -22,9 +22,13 @@ switch(numPlayers) {
         boton__jugador4.style.display = 'none';
         boton__jugador1.style.height = '100%';
         boton__jugador2.style.height = '100%';
+        marcador3.style.display = 'none';
+        marcador4.style.display = 'none';
+
         break;
     case 3:
         boton__jugador4.style.display = 'none';
+        marcador4.style.display = 'none';
         break;
 }
 
@@ -33,7 +37,6 @@ boton__jugador2.addEventListener('click',clickJugador2);
 boton__jugador3.addEventListener('click',clickJugador3);
 boton__jugador4.addEventListener('click',clickJugador4);
 boton__temporizador.addEventListener('click',clickCancelar);
-
 
 
 // moveToken(marcador1, 2);
@@ -66,6 +69,9 @@ function clickJugador1() {
         },150)
     }
     else {
+        boton__jugador1.disabled = true;
+        boton__temporizador.disabled = true;
+        boton__temporizador.style.color= 'rgb(161, 161, 161)';
         throwDice(marcador1);       
     }
    
@@ -98,6 +104,9 @@ function clickJugador2() {
         },150)
     }
     else {
+        boton__jugador2.disabled = true;
+        boton__temporizador.disabled = true;
+        boton__temporizador.style.color= 'rgb(161, 161, 161)';
         throwDice(marcador2);
     }
 
@@ -127,6 +136,9 @@ function clickJugador3() {
         },150)
     }
     else {
+        boton__jugador3.disabled = true;
+        boton__temporizador.disabled = true;
+        boton__temporizador.style.color= 'rgb(161, 161, 161)';
         throwDice(marcador3);
     }
 }
@@ -153,6 +165,9 @@ function clickJugador4() {
         
     }
     else {
+        boton__jugador4.disabled = true;
+        boton__temporizador.disabled = true;
+        boton__temporizador.style.color= 'rgb(161, 161, 161)';
         throwDice(marcador4);
     }
 }
@@ -200,85 +215,113 @@ function throwDice(marcador) {
     setTimeout(() => {
         moveToken(marcador,numeroAleatorio);
 
+
+        
     },10000);
+
+
 
 }
 
 function clickCancelar() {
     switch(jugadorActivado) {
+
+        case 0:
+
+
+
+
+        //---------------------------------jugador 1
+
         case 1:
-            boton__jugador1.innerHTML = 'JOSE - PEDRO<span></span>';
-            switch(numPlayers) {
-                case 2:
-                    boton__jugador1.classList.add('disminuir2');
-                    boton__jugador1.classList.remove('aumentar2')
-                    
-                    setTimeout(function() {
-                        boton__jugador1.classList.remove('disminuir2');
-                        boton__jugador2.style.display = 'flex';
-                    }, animation_time);
-                    break;
-                case 3:
-                    boton__jugador1.classList.add('disminuir4');
-                    boton__jugador1.classList.remove('aumentar4')
-                    
-                    setTimeout(function() {
-                        boton__jugador1.classList.remove('disminuir4');
-                        boton__jugador2.style.display = 'flex';
-                        boton__jugador3.style.display = 'flex';
-                    }, animation_time);
-                    break;
-                default:
-                    boton__jugador1.classList.add('disminuir4');
-                    boton__jugador1.classList.remove('aumentar4')
-                    
-                    setTimeout(function() {
-                        boton__jugador1.classList.remove('disminuir4');
-                        boton__jugador2.style.display = 'flex';
-                        boton__jugador3.style.display = 'flex';
-                        boton__jugador4.style.display = 'flex';
-                    }, animation_time);
-            }
-            jugadorActivado = 0;
-            break;
+        boton__jugador1.innerHTML = 'JOSE - PEDRO<span></span>';
+        switch(numPlayers) {
+            case 2:
+                boton__jugador1.classList.add('disminuir2');
+                boton__jugador1.classList.remove('aumentar2')
+                
+                setTimeout(function() {
+                    boton__jugador1.classList.remove('disminuir2');
+                    boton__jugador2.style.display = 'flex';
+                }, animation_time);
+                break;
+            case 3:
+                boton__jugador1.classList.add('disminuir4');
+                boton__jugador1.classList.remove('aumentar4')
+                
+                setTimeout(function() {
+                    boton__jugador1.classList.remove('disminuir4');
+                    boton__jugador2.style.display = 'flex';
+                    boton__jugador3.style.display = 'flex';
+                }, animation_time);
+                break;
+            default:
+                boton__jugador1.classList.add('disminuir4');
+                boton__jugador1.classList.remove('aumentar4')
+                
+                setTimeout(function() {
+                    boton__jugador1.classList.remove('disminuir4');
+                    boton__jugador2.style.display = 'flex';
+                    boton__jugador3.style.display = 'flex';
+                    boton__jugador4.style.display = 'flex';
+                }, animation_time);
+        }
+        jugadorActivado = 0;
+        boton__jugador1.disabled = false;
+        boton__temporizador.disabled = false;
+        boton__temporizador.style.color= '#0e0953';
+        jugadorActivado = 0;
+        boton__temporizador.innerHTML = 'INICIAR <span></span>';
+        break;
+        
+        //---------------------------------jugador 2
+
         case 2:
-            boton__jugador2.innerHTML = 'ANA - MARCO<span></span>';
-            switch(numPlayers) {
-                case 2:
-                    boton__jugador2.classList.add('disminuir2');
-                    boton__jugador2.classList.remove('aumentar2')
-                    
-                    setTimeout(function() {
-                        boton__jugador2.classList.remove('disminuir2');
-                        boton__jugador1.style.display = 'flex';
-                        contenedor_boton.style.justifyContent = "space-between";
-                    }, animation_time);
-                    break;
-                case 3:
-                    boton__jugador2.classList.add('disminuir4');
-                    boton__jugador2.classList.remove('aumentar4')
-                    
-                    setTimeout(function() {
-                        boton__jugador2.classList.remove('disminuir4');
-                        boton__jugador1.style.display = 'flex';
-                        boton__jugador3.style.display = 'flex';
-                        contenedor_boton.style.justifyContent = "space-between";
-                    }, animation_time);
-                    break;
-                default:
-                    boton__jugador2.classList.add('disminuir4');
-                    boton__jugador2.classList.remove('aumentar4')
-                    
-                    setTimeout(function() {
-                        boton__jugador2.classList.remove('disminuir4');
-                        boton__jugador1.style.display = 'flex';
-                        boton__jugador3.style.display = 'flex';
-                        boton__jugador4.style.display = 'flex';
-                        contenedor_boton.style.justifyContent = "space-between";
-                    }, animation_time);
-            }
-            jugadorActivado = 0;
-            break;
+        boton__jugador2.innerHTML = 'ANA - MARCO<span></span>';
+        switch(numPlayers) {
+            case 2:
+                boton__jugador2.classList.add('disminuir2');
+                boton__jugador2.classList.remove('aumentar2')
+                
+                setTimeout(function() {
+                    boton__jugador2.classList.remove('disminuir2');
+                    boton__jugador1.style.display = 'flex';
+                    contenedor_boton.style.justifyContent = "space-between";
+                }, animation_time);
+                break;
+            case 3:
+                boton__jugador2.classList.add('disminuir4');
+                boton__jugador2.classList.remove('aumentar4')
+                
+                setTimeout(function() {
+                    boton__jugador2.classList.remove('disminuir4');
+                    boton__jugador1.style.display = 'flex';
+                    boton__jugador3.style.display = 'flex';
+                    contenedor_boton.style.justifyContent = "space-between";
+                }, animation_time);
+                break;
+            default:
+                boton__jugador2.classList.add('disminuir4');
+                boton__jugador2.classList.remove('aumentar4')
+                
+                setTimeout(function() {
+                    boton__jugador2.classList.remove('disminuir4');
+                    boton__jugador1.style.display = 'flex';
+                    boton__jugador3.style.display = 'flex';
+                    boton__jugador4.style.display = 'flex';
+                    contenedor_boton.style.justifyContent = "space-between";
+                }, animation_time);
+        }
+        jugadorActivado = 0;
+        boton__jugador2.disabled = false;
+        boton__temporizador.disabled = false;
+        boton__temporizador.style.color= '#0e0953';
+        jugadorActivado = 0;
+        boton__temporizador.innerHTML = 'INICIAR <span></span>';
+        break;
+            
+        //---------------------------------jugador 3
+
         case 3:
             boton__jugador3.innerHTML = 'MATEO - MARIA<span></span>';
             switch(numPlayers) {
@@ -306,7 +349,15 @@ function clickCancelar() {
                     }, animation_time);
             }
             jugadorActivado = 0;
+            boton__jugador3.disabled = false;
+            boton__temporizador.disabled = false;
+            boton__temporizador.style.color= '#0e0953';
+            jugadorActivado = 0;
+            boton__temporizador.innerHTML = 'INICIAR <span></span>';
             break;
+        
+        //---------------------------------jugador 4       
+        
         case 4:
             boton__jugador4.innerHTML = 'ESTEFANI - MAYRA<span></span>';
             switch(numPlayers) {
@@ -325,11 +376,15 @@ function clickCancelar() {
                     }, animation_time);
             }
             jugadorActivado = 0;
+            boton__jugador4.disabled = false;
+            boton__temporizador.disabled = false;
+            boton__temporizador.style.color= '#0e0953';
+            jugadorActivado = 0;
+            boton__temporizador.innerHTML = 'INICIAR <span></span>';
             break;
         
     }
-    jugadorActivado = 0;
-    boton__temporizador.innerHTML = 'INICIAR <span></span>';
+    
 }
 
 function moveToken(marcador, numSpaces) {
@@ -353,6 +408,9 @@ function moveToken(marcador, numSpaces) {
         position++;
         marcador.setAttribute('pos', position);
     }
+
+    setTimeout(() => {clickCancelar()},350 * numSpaces);
+
     
 }
 

@@ -194,10 +194,6 @@ main {
     transition-duration: 10s;
 
 }
-.dice:hover {
-    transform: rotateX(300deg) rotateY(200deg);
-    transition-duration: 4s;
-}
 .lanzarDado {
     transform: rotateX(calc(3600deg + var(--gradosX))) rotateY(calc(1080deg + var(--gradosY)));
 }
@@ -382,7 +378,7 @@ main {
     scroll-snap-align: start;
     background-color: var(--darker-blue);
 
-}
+} 
 .baraja--tarjeta {
     height: 75%;
     display: flex;
@@ -440,5 +436,4 @@ main {
     font-weight: var(--medium);
     background-color: var(--theme-light);
     color: var(--theme-dark);
-
 }
