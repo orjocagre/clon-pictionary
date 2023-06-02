@@ -28,6 +28,8 @@ const dificil1 = document.querySelector('.dificilt1');
 const dificil2 = document.querySelector('.dificilt2');
 const todos1 = document.querySelector('.todost1');
 const todos2 = document.querySelector('.todost2');
+const baraja__tarjeta = document.querySelector('.baraja--tarjeta');
+let touch = null;
 
 
 
@@ -57,6 +59,11 @@ boton__jugador3.addEventListener('click',clickJugador3);
 boton__jugador4.addEventListener('click',clickJugador4);
 boton__temporizador.addEventListener('click',clickCancelar);
 boton__nueva.addEventListener('click',clickNueva);
+baraja__tarjeta.addEventListener('touchstart',inicioMovimiento);
+baraja__tarjeta.addEventListener('touchmove',Movimiento);
+baraja__tarjeta.addEventListener('touchend',finMovimiento);
+baraja__tarjeta.addEventListener("touchcancel", cancelMovimiento);
+
 
 
 // moveToken(marcador1, 2);
@@ -475,4 +482,60 @@ function clickNueva() {
     dificil2.innerHTML = dif[Math.floor(Math.random()*dif.length)];
     todos1.innerHTML = pla[Math.floor(Math.random()*pla.length)];
     todos2.innerHTML = pla[Math.floor(Math.random()*pla.length)];
+}
+
+let puntoInicio;
+let rotacion;
+let orientacion = 0;
+
+function inicioMovimiento(evt) {
+    //evt.preventDefault();
+    const touches = evt.changedTouches;
+    
+    for (let i = 0; i < touches.length; i++) {
+        touch = touches[i];
+        //console.log(touches[i].pageX + " " + touches[i].pageY);
+        puntoInicio = touches[i].pageX;
+    }
+    baraja__tarjeta.style.transitionDuration = '0s';
+}
+function Movimiento(evt) {
+    //evt.preventDefault();
+    const touches = evt.changedTouches;
+    
+    for (let i = 0; i < touches.length; i++) {
+        
+        //console.log(`ctx.moveTo( ${touch.pageX}, ${touch.pageY} );`);
+        //console.log(`ctx.lineTo( ${touch.pageX}, ${touch.pageY} );`);
+        
+        //console.log((touch.pageX - puntoInicio) / baraja__tarjeta.clientWidth);
+        
+        touch = touches[i];
+        
+    }
+    rotacion = orientacion + 360*(touch.pageX - puntoInicio) / baraja__tarjeta.clientWidth;
+    console.log("rota "+rotacion );
+    baraja__tarjeta.style.transform = 'rotateY('+rotacion+'deg)';
+}
+function finMovimiento(event) {
+    baraja__tarjeta.style.transitionDuration = '0.2s';
+    //-90 90 180 deg, 
+    
+    if(rotacion%360 > -90 && rotacion%360 < 90) {
+        baraja__tarjeta.style.transform = 'rotateY('+(rotacion-rotacion%360)+'deg)';
+        console.log(rotacion-rotacion%360);
+        orientacion = 0;
+    }
+    else {
+        baraja__tarjeta.style.transform = 'rotateY('+(rotacion-rotacion%360+180)+'deg)';
+        orientacion = 180;
+        console.log(rotacion-rotacion%360);
+
+
+    }
+
+}
+
+function cancelMovimiento(event) {
+
 }

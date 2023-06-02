@@ -61,19 +61,34 @@ main {
     flex-flow: row-reverse;
     justify-content: flex-end;
 }
+.baraja--contendor-tarjeta {
+    height: 100%;
+    width: 100%;
+    perspective: 0;
+    opacity: 0;
+    transition-duration: 0.2s;
+}
+.baraja--contendor-tarjeta:hover {
+    opacity: 1;
+}
 .baraja--botones :hover {
     background: #dbdbdb;
     cursor: pointer;
 }
 .baraja--tarjeta {
-    width: 60%;
+    width: 100%;
     height: 100%;
     padding-right: 30px;
+    display: flex;
 }
 .baraja--lado-tarjeta {
+    position: initial;
+    transform: rotate(0deg);
     width: 50%;
+    height: calc(100% - 40px);
     min-width: 100px;
     margin-top: 0;
+    margin: 10px;
 }
 .baraja--lado-tarjeta h2 {
     font-size: 2.5rem;
