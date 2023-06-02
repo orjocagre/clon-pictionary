@@ -519,20 +519,10 @@ function Movimiento(evt) {
 }
 function finMovimiento(event) {
     baraja__tarjeta.style.transitionDuration = '0.2s';
-    //-90 90 180 deg, 
     
-    if(rotacion%360 > -90 && rotacion%360 < 90) {
-        baraja__tarjeta.style.transform = 'rotateY('+(rotacion-rotacion%360)+'deg)';
-        console.log(rotacion-rotacion%360);
-        orientacion = 0;
-    }
-    else {
-        baraja__tarjeta.style.transform = 'rotateY('+(rotacion-rotacion%360+180)+'deg)';
-        orientacion = 180;
-        console.log(rotacion-rotacion%360);
+    baraja__tarjeta.style.transform = 'rotateY('+(Math.round(rotacion/180)*180)+'deg)';
+    orientacion = Math.round(rotacion/180)*180;
 
-
-    }
 
 }
 
