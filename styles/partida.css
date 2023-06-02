@@ -442,3 +442,15 @@ main {
     background-color: var(--theme-light);
     color: var(--theme-dark);
 } 
+
+
+
+@media (max-width: 380px){
+
+    .controles--boton{
+        font-size: 0rem;
+    }
+    .controles--boton__temporizador {
+        font-size: 1.8rem;
+    }
+}
