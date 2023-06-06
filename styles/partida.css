@@ -191,7 +191,7 @@ main {
     position: relative;
     transform-style: preserve-3d;
     /* transform: rotateY(185deg) rotateX(150deg) rotateZ(315deg); */
-    transition-duration: 10s;
+    transition-duration: 5s;
 
 }
 .lanzarDado {
@@ -383,6 +383,7 @@ main {
     justify-content: center;
     height: 75%;
     perspective: 1000px;
+    overflow-x: hidden;
 }
 .baraja--tarjeta {
     height: 80%;
@@ -390,7 +391,18 @@ main {
     position: relative;
     background-color: transparent;
     transform-style: preserve-3d;
+    transition-duration: 1s;
 }
+.tarjeta-derecha {
+    transform: translateX(120%);
+
+}
+.tarjeta-izquierda {
+    transform: translate(-120%);
+}
+
+
+
 .baraja--lado-tarjeta {
     backface-visibility: hidden;
     position: absolute;
