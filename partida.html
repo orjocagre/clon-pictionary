@@ -1,6 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 10vh auto;
+            padding: 2rem 3rem;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            color: #222;
+            animation: modalIn 0.25s;
+        }
+        @keyframes modalIn {
+            from { transform: translateY(-40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1010;
+            transition: color 0.2s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-content h1 {
+            margin-top: 0;
+            font-size: 2.2rem;
+            text-align: center;
+            color: #0D7DFF;
+        }
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .modal-content label {
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        .modal-content input[type="text"] {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal-content input[type="radio"] {
+            margin-right: 0.3rem;
+        }
+        .modal-content input[type="submit"] {
+            margin-top: 1.2rem;
+            padding: 0.7rem 0;
+            background: #0D7DFF;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .modal-content input[type="submit"]:hover {
+            background: #095bb5;
+        }
+        </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,10 +171,10 @@
         </section>
         <section class="controles">
             <div class="controles--contenedor-boton">
-                <button class="controles--boton controles--boton__jugador1">JOSE - PEDRO<span></span></button>
-                <button class="controles--boton controles--boton__jugador2">ANA - MARCO<span></span></button>
-                <button class="controles--boton controles--boton__jugador3">MATEO - MARIA<span></span></button>
-                <button class="controles--boton controles--boton__jugador4">ESTEFANI - MAYRA<span></span></button>
+                <button class="controles--boton controles--boton__jugador1"><span></span></button>
+                <button class="controles--boton controles--boton__jugador2"><span></span></button>
+                <button class="controles--boton controles--boton__jugador3"><span></span></button>
+                <button class="controles--boton controles--boton__jugador4"><span></span></button>
             </div>
             <button class="controles--boton controles--boton__temporizador">INICIAR <span></span></button>
         </section>
@@ -138,5 +227,86 @@
         </section>
     </main>
     <script src="./main.js"></script>
+</main>
+
+<!-- Settings Modal (copied from settings.html, as a modal) -->
+<div id="settingsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" id="closeSettings">&times;</span>
+        <h1>New Game</h1>
+        <form action="./partida.html" method="post">
+
+            <p>Number of teams</p>
+            <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem;">
+                <input type="radio" name="numberOfTeams" id="rbt2teams" value="2" checked>
+                <label for="rbt2teams">2</label>
+                <input type="radio" name="numberOfTeams" id="rbt3teams" value="3">
+                <label for="rbt3teams">3</label>
+                <input type="radio" name="numberOfTeams" id="rbt4teams" value="4">
+                <label for="rbt4teams">4</label>
+            </div>
+
+            <label for="teamName1">Team name:</label>
+            <input type="text" name="teamName1" id="teamName1">
+
+            <label for="teamName2">Team name:</label>
+            <input type="text" name="teamName2" id="teamName2">
+
+            <label for="teamName3">Team name:</label>
+            <input type="text" name="teamName3" id="teamName3">
+
+            <label for="teamName4">Team name:</label>
+            <input type="text" name="teamName4" id="teamName4">
+
+            <label for="movePlayer1">Movimientos Jugador 1:</label>
+            <input type="number" name="movePlayer1" id="movePlayer1" min="-99" value="0">
+
+            <label for="movePlayer2">Movimientos Jugador 2:</label>
+            <input type="number" name="movePlayer2" id="movePlayer2" min="-99" value="0">
+
+            <label for="movePlayer3">Movimientos Jugador 3:</label>
+            <input type="number" name="movePlayer3" id="movePlayer3" min="-99" value="0">
+
+            <label for="movePlayer4">Movimientos Jugador 4:</label>
+            <input type="number" name="movePlayer4" id="movePlayer4" min="-99" value="0">
+
+            <input type="submit" value="Start" id="submit">
+        </form>
+    </div>
+</div>
+<script src="./settings.js"></script>
+<script>
+// Show/hide team name and movement inputs based on number of teams
+function updateTeamInputsVisibility() {
+    const numTeams = document.querySelector('input[name="numberOfTeams"]:checked')?.value || '2';
+    for (let i = 1; i <= 4; i++) {
+        const nameLabel = document.querySelector('label[for="teamName' + i + '"]');
+        const nameInput = document.getElementById('teamName' + i);
+        const moveLabel = document.querySelector('label[for="movePlayer' + i + '"]');
+        const moveInput = document.getElementById('movePlayer' + i);
+        if (i <= parseInt(numTeams, 10)) {
+            if (nameLabel) nameLabel.style.display = '';
+            if (nameInput) nameInput.style.display = '';
+            if (moveLabel) moveLabel.style.display = '';
+            if (moveInput) moveInput.style.display = '';
+        } else {
+            if (nameLabel) nameLabel.style.display = 'none';
+            if (nameInput) nameInput.style.display = 'none';
+            if (moveLabel) moveLabel.style.display = 'none';
+            if (moveInput) moveInput.style.display = 'none';
+        }
+    }
+}
+document.querySelectorAll('input[name="numberOfTeams"]').forEach(radio => {
+    radio.addEventListener('change', updateTeamInputsVisibility);
+});
+// Run on modal open
+if (document.getElementById('settingsModal')) {
+    document.getElementById('settingsModal').addEventListener('show', updateTeamInputsVisibility);
+}
+// Run on DOMContentLoaded (for initial state)
+document.addEventListener('DOMContentLoaded', updateTeamInputsVisibility);
+</script>
+</script>
 </body>
 </html>

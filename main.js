@@ -1,4 +1,157 @@
-const numPlayers = 4;
+// Modal logic for settings
+window.addEventListener('DOMContentLoaded', function() {
+    const settingsModal = document.getElementById('settingsModal');
+    const closeSettingsBtn = document.getElementById('closeSettings');
+    let longPressTimer = null;
+
+    function openSettingsModal() {
+        // Fill team name inputs with current names
+        document.getElementById('teamName1').value = player1Name || 'Equipo 1';
+        document.getElementById('teamName2').value = player2Name || 'Equipo 2';
+        document.getElementById('teamName3').value = player3Name || 'Equipo 3';
+        document.getElementById('teamName4').value = player4Name || 'Equipo 4';
+        // Select the current number of teams
+        if (window.numPlayers === 2) {
+            document.getElementById('rbt2teams').checked = true;
+        } else if (window.numPlayers === 3) {
+            document.getElementById('rbt3teams').checked = true;
+        } else if (window.numPlayers === 4) {
+            document.getElementById('rbt4teams').checked = true;
+        }
+        settingsModal.style.display = 'block';
+    }
+    function closeSettingsModal() {
+        settingsModal.style.display = 'none';
+    }
+    if (closeSettingsBtn) {
+        closeSettingsBtn.onclick = closeSettingsModal;
+    }
+    window.addEventListener('click', function(event) {
+        if (event.target === settingsModal) {
+            closeSettingsModal();
+        }
+    });
+
+    // Long press on timer/cancel button
+    const timerBtn = document.querySelector('.controles--boton__temporizador');
+    if (timerBtn) {
+        timerBtn.addEventListener('mousedown', function() {
+            longPressTimer = setTimeout(openSettingsModal, 800); // 800ms for long press
+        });
+        timerBtn.addEventListener('mouseup', function() {
+            clearTimeout(longPressTimer);
+        });
+        timerBtn.addEventListener('mouseleave', function() {
+            clearTimeout(longPressTimer);
+        });
+        // Touch events for mobile
+        timerBtn.addEventListener('touchstart', function() {
+            longPressTimer = setTimeout(openSettingsModal, 800);
+        });
+        timerBtn.addEventListener('touchend', function() {
+            clearTimeout(longPressTimer);
+        });
+        timerBtn.addEventListener('touchcancel', function() {
+            clearTimeout(longPressTimer);
+        });
+    }
+    // Show modal on first page load
+    if (settingsModal) {
+        openSettingsModal();
+    }
+
+    // Set player names on modal save
+    const settingsForm = settingsModal ? settingsModal.querySelector('form') : null;
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Get number of teams
+            let numTeams = 2;
+            if (document.getElementById('rbt3teams').checked) numTeams = 3;
+            if (document.getElementById('rbt4teams').checked) numTeams = 4;
+
+            // Get team names
+            const teamNames = [
+                document.getElementById('teamName1').value || 'Equipo 1',
+                document.getElementById('teamName2').value || 'Equipo 2',
+                document.getElementById('teamName3').value || 'Equipo 3',
+                document.getElementById('teamName4').value || 'Equipo 4',
+            ];
+
+            // Set button names
+            const btns = [
+                document.querySelector('.controles--boton__jugador1'),
+                document.querySelector('.controles--boton__jugador2'),
+                document.querySelector('.controles--boton__jugador3'),
+                document.querySelector('.controles--boton__jugador4'),
+            ];
+
+            const marcs = [
+                document.querySelector('.marcador-1'),
+                document.querySelector('.marcador-2'),
+                document.querySelector('.marcador-3'),
+                document.querySelector('.marcador-4'),
+            ];
+
+            for (let i = 0; i < 4; i++) {
+                if (i < numTeams) {
+                    btns[i].style.display = '';
+                    marcs[i].style.display = '';
+                    btns[i].innerHTML = teamNames[i] + '<span></span>';
+                } else {
+                    btns[i].style.display = 'none';
+                    marcs[i].style.display = 'none';
+                }
+            }
+        
+            if(numTeams == 2) {
+                boton__jugador1.style.height = '100%';
+                boton__jugador2.style.height = '100%';
+            }
+            else {
+                boton__jugador1.style.height = 'calc(50% - 10px)';
+                boton__jugador2.style.height = 'calc(50% - 10px)';
+                boton__jugador3.style.height = 'calc(50% - 10px)';
+                boton__jugador4.style.height = 'calc(50% - 10px)';
+
+            }
+
+
+
+
+            // Update global player variables and numPlayers
+            numPlayers = numTeams;
+            player1Name = teamNames[0];
+            player2Name = teamNames[1];
+            player3Name = teamNames[2];
+            player4Name = teamNames[3];
+
+            // Move tokens for each player according to input
+            const moveInputs = [
+                document.getElementById('movePlayer1'),
+                document.getElementById('movePlayer2'),
+                document.getElementById('movePlayer3'),
+                document.getElementById('movePlayer4'),
+            ];
+            for (let i = 0; i < numTeams; i++) {
+                const moves = parseInt(moveInputs[i].value, 10) || 0;
+                if (moves > 0 && marcs[i]) {
+                    moveToken(marcs[i], moves);
+                } else if (moves < 0 && marcs[i]) {
+                    moveTokenBack(marcs[i], Math.abs(moves));
+                }
+            }
+
+            closeSettingsModal();
+        });
+    }
+});
+// ...existing code...
+let numPlayers = 2;
+let player1Name = 'Player 1';
+let player2Name = 'Player 2';
+let player3Name = 'Player 3';
+let player4Name = 'Player 4';
 
 const pla = ["Liebre","Han Solo","Tigre","Pez payaso","Cantera","Romeo and Juliet","Elizabeth Bennet","Biblioteca antigua","Captain Jack Sparrow","Voldemort","Granja","Glaciar","Montaña","Thor","Colina","Leopardo de las nieves","Hotel","Profesor","Astronauta","Valle de las flores","Castillo de cuentos de hadas","Bilbo Baggins","Estación de tren","Aeropuerto","Mahatma Gandhi","París","Montaña nevada","Koala","Escorpión","Isla tropical","Pablo Picasso","Ruinas","Rana","Parque temático","Acuario","Villano","Noruega","Cuevas submarinas","Atleta","Kakapo","India","Reino Unido","Frodo Bolsón","Castillo","Artista","Cangrejo","Mr. Spock","Luke Skywalker","Frodo Baggins","Frida Kahlo","Black Widow","Araña","Pueblo","Lionel Messi","Ballena","Catwoman","Ciervo volante","Saltamontes","Alice","Granja de animales","Estadio deportivo","Museo","Jirafa","Italia","Cerdo","Gimli","Murciélago","Tapir","Belle","Cristiano Ronaldo","Detective","Barack Obama","Parque nacional","Robin Hood","Reserva natural","Países Bajos","Ganso","Piscina","México","Spider-Man","Moby Dick","Jardinero","Gran cañón del colorado","Colina verde","Pavo real","Cisne negro","Fontanero","Albatros","Marruecos","Actor","Frodo Baggins","Brujo","Superman","Río","Maravilla arquitectónica","Sherlock Holmes","William Shakespeare","Ratón","Mercado nocturno","Chimpancé","Conductor de taxi","Restaurante","Gorila de montaña","Elon Musk","Búho","Manatí","Periquito","Sinagoga","Luciérnaga","Wolverine","Medusa","Albert Einstein","Dr. Hannibal Lecter","Tortuga marina","Gaviota","Ciudad medieval","Hermione Granger","Pueblo costero","Cueva","Ariel","Flamenco","Pantera","Perico","Armadillo","Sherlock Holmes","Hipopótamo","Casa rural","Aladdin","Cine","Campo de golf","Oprah Winfrey","Músico","Alemania","Viñedo","Mulan","Cuevas de cristal","Snow White","Batman","Aragorn","Diseñador de videojuegos","Abogado","Lago","Parque nacional marino","Captain America","Cataratas","Ardilla","Dr. Jekyll and Mr. Hyde","Suecia","Tigre de Bengala","Lobo","Quokka","Katniss Everdeen","Panda","Ciudad antigua","Amelia Earhart","Caballito de mar","Callejón estrecho","Farmacéutico","Pez espada","Rey","Hulk","Spa","Dorothy Gale","Ibex","Calamar","Pueblo fantasma","Dingo","Mansión","Zoológico","Teatro","Pueblo pintoresco","Zorro","Tyrion Lannister","Pez","Teatro antiguo","Mono","Antílope","Narval","Sapo","Jane Goodall","Delfín","Palacio","Camaleón","Rata","Diseñador","Lagarto","Steve Jobs","Captain America","J.K. Rowling","Darth Vader","Superman","Atticus Finch","Frodo Baggins","Estación de esquí","Animador","Elefante africano","Ciudad","Bill Gates","Marie Curie","Mario","Rinoceronte","Conejo","Indiana Jones","Simba","Estrella de mar","Biblioteca","Calamar gigante","Lechuza","Cobra","Gato","Stephen Hawking","Periodista","Mark Zuckerberg","Playa paradisíaca","Castor","Jardín","Superhéroe","Cisne","Tortuga","Don Quijote","Carpintero","Lago cristalino","Ñu","Bombero","Leia Organa","Puma","Tarzan","Rinoceronte blanco","Mercado","Suiza","Marie Antoinette","Guepardo","Gandalf","Pocahontas","Ocelote","Japón","China","Neo","Caballo","Lémur","Plaza de mercado","Bosque de hadas","Perro","Nueva Zelanda","Albañil","Arquitecto","Voldemort","Playa desierta","Rusia","Gorrión","Bosque encantado","Gimnasio","Cascada","Centro comercial","Cebra","Monumento","Canario","Anakin Skywalker","Mapache","Queen Elizabeth II","Templo hindú","Bosque encantado","Cocodrilo","Jeff Bezos","Marabú","Espía","Coco Chanel","Galería de arte","Madonna","Chef","Gandalf","Pingüino","Spider-Man","Juez","Elefante","Observatorio","Hormiga","Peter Pan","Grulla","Spa","Alce","Santuario de aves","Sudáfrica","Libélula","Caballito de mar","Elvis Presley","Leopardo","Campo","Thorin Oakenshield","Hulk","Gandalf","Pista de esquí","Drácula","Kylo Ren","Gacela","Caracol","Gorila","Iglesia","Veterinario","Volcán","Grillo","Oveja","Muhammad Ali","Mariposa","Hermione Granger","Éowyn","Puerto","Agricultor","Cinderella","Rosa Parks","Koala","Langosta","Bailarín","Malala Yousafzai","Investigador","Iron Man","Playa","Langostino","Thor","Cascada secreta","Canguro","Spock","Cantante","Mansión abandonada","Loro","Piloto","Bar","Entrenador","Australia","Paseo marítimo","Don Draper","Águila calva","Marilyn Monroe","Pez globo","Michael Jackson","Deadpool","Desierto","Nelson Mandela","Egipto","Mofeta","Wolverine","Orangután de Borneo","Electricista","Wonder Woman","Bélgica","Mother Teresa","Faro solitario","Pikachu","Zarigüeya","Castillo encantado","Oryx","Cueva misteriosa","Walter White","Count Dooku","Abejorro","Bella durmiente","Wonder Woman","Tiburón","Mosquito","Legolas","Cucaracha","Orangután","Samwise Gamgee","Tortuga gigante","Científico","Portugal","Brasil","Plaza","Mariposa","Lagartija","Ciervo","Mezquita","Halcón","Mansión embrujada","Holden Caulfield","Pez ángel","Conductor de autobús","Director de cine","Murciélago","Isla","Cóndor","Ingeniero","Programador","Fotógrafo","Elsa","Delfín nariz de botella","Templo budista","Arrecife de coral","James T. Kirk","Canadá","Escritor","Trinity","Lara Croft","Buitre","Viñedo","Langosta espinosa","Orca","Francia","Ruinas mayas","Cafetería","Bosque","Argentina","Santuario","Daenerys Targaryen","Mowgli","Ualabí","Policía","Oso","Hermione Granger","León","Batman","Jay Gatsby","Obi-Wan Kenobi","Masajista","Águila","Severus Snape","Templo","Pato","Zorro","Catedral","Puercoespín","Psicólogo","Trucha","Iglesia histórica","Calle","Pulpo","Faro","Empresario","Catedral gótica","Jardín botánico","Ron Weasley","Nutria","Mosca","Legolas","Sherlock Holmes","Vaca","James Bond","Selva","Isla privada","Estados Unidos","The Joker","Gran cañón","Salamandra","Harry Potter","Cabra montesa","España","Iron Man","Hacker","Langosta de agua dulce","Darth Vader","Víbora","Modelo","Parque","Serpiente","Cementerio","Gandalf","Parque de atracciones","Frankenstein","Erizo","Yoda","Dumbledore","Pingüino emperador","Luke Skywalker","Pelícano","Martin Luther King Jr.","Captain Jack Sparrow","Willy Wonka","Lago tranquilo","Leonardo da Vinci","Escarabajo","Rascacielos","Abeja","Médico","Aragorn","Sherlock Holmes","Serena Williams"];
 const obj = ["Sombrero","Escultura","Guitarra","Transportador","Navaja multiusos","Flauta","Jabonera","Exprimidor","Raqueta de bádminton","Cantimplora","Pinzas","Aire acondicionado","Cepillo de uñas","Papelera","Batidora","Joyero","Bolígrafo","Tambor","Perfume","Pijama","Taza","Pantalla","Bolígrafo","Mapas","Taza","Sacapuntas","Mochila de acampada","Leggings","Jeans","Blusa","Grapadora","Cuaderno","Botella","Alicate","Camisa","Plancha de pelo","Atlas","Tijeras","Silla","Gorro","Sartén","Destornillador eléctrico","Escuadra","Telescopio","Binoculares","Teléfono","Brújula","Televisor","Bañador","Caja de herramientas","Licuadora","Cobija","Calcetines","Esponja","Colchón inflable","Lápiz","Vestido","Bolsa","Bicicleta","Escoba","Tostadora","Corrector líquido","Marcador","Patines","Horno","Microondas","Trípode","Térmica","Martillo neumático","Regla","Esponja de baño","Cuaderno","Cinturón","Carpeta","Auriculares","Globo terráqueo","Procesador de alimentos","Reloj","Control remoto","Botiquín","Rotuladores","Proyector","Martillo","Gorra","Archivador","Escalera","Reloj de pulsera","Paraguas","Falda","Bufanda","Gafas","Microondas","Mesa","Refrigerador","Peine","Post-it","Silla de ruedas","Lavadora","Pintura","Nivel de burbuja","Pintura","Billetera","Collar de perlas","Clips","Clasificadores","Jabón","Abrigo","Microscopio","Bloc de notas","Estufa","Cepillo de dientes eléctrico","Marcadores","Mantequillera","Papel milimetrado","Cafetera","Carpeta","Cuchillo","Candelabro","Pasta de dientes","Licuadora","Carrito de la compra","Ventilador","Aspiradora","Escritorio","Violonchelo","Pincel","Chaqueta","Plancha","Bolsa de lápices","Encendedor","Chinches","Percha","Resaltadores","Separadores","Destapador","Secador de pelo","Mantel","Refrigerador","Cepillo de pelo","Espejo","Fregona","Navaja","Goma de borrar","Clips","Cama","Toalla","Monopatín","Zapatos","Trompeta","Bloc de notas","Escalera de mano","Sudadera","Saxofón","Papel de colores","Batidora","Bolso de mano","Cubo de basura","Corrector líquido","Pizarra","Horno","Calculadora","Maleta","Lavavajillas","Llave inglesa","Corbata","Vaso","Tijeras","Televisor","Taza de café","Cinta métrica","Teclado","Cacerola","Zapatos","Anillo de compromiso","Planta","Lámpara de pie","Cepillo de dientes","Maquillaje","Sacapuntas","Estuche","Colores","Lavadora","Equipo de música","Chanclas","Correa de reloj","Pelota de baloncesto","Cinta adhesiva","Guantes","Toallas de playa","Agenda escolar","Palillos chinos","Papel de calco","Ventilador","Sierra eléctrica","Secadora","Almohada","Barra de sonido","Cafetera","Raqueta de tenis","Llave ajustable","Plato","Ropa interior","Camiseta","Tostadora","Cubeta","Rodillo de pintura","Termómetro","Compás","Destornillador","Guantes","Libro","Borrador para pizarra","Archivador","Mapa","Lápiz","Chaqueta","Carretilla","Abrelatas","Cámara deportiva","Ratón","Computadora","Papel de acuarela","Canasta de baloncesto","Cuchara","Pulsera","Trombón","Despertador","Tenedor","Pegamento","Patines de hielo","Campana extractora","Rotuladores","Mochila","Bufanda","Linterna","Mochila","Altavoz","Lámpara","Calcetines","Aspiradora","Termómetro de cocina","Patineta","Proyector","Brújula de senderismo","Anillo","Piano","Termo","Reproductor de DVD","Olla","Plancha","Cucharón","Pantalones","Pantalones","Pelota de golf","Collar","Vestido","Marcadores","Chaleco","Acordeón","Volante","Suéter","Cámara","Tienda de campaña","Reloj de pared","Shorts","Portafolios","Servilleta","Bastón","Regla","Calefactor","Clavo","Altavoz","Bolsa de deporte","Violín","Calculadora","Libreta de notas","Libro de texto","Perforadora","Grapadora","Diccionario","Traje","Camisa","Maletín de negocios","","Lámpara de escritorio","Secadora","Freidora","Balón de fútbol","Linterna frontal"];
@@ -34,6 +187,8 @@ let touch = null;
 
 
 let jugadorActivado = 0;
+let isTimerActive = false;
+let intervalo;
 const animation_time = 200;
 let dice;
 
@@ -91,7 +246,7 @@ function clickJugador1() {
                 boton__jugador1.classList.add('aumentar4');
         }
         setTimeout(() => {
-            boton__jugador1.innerHTML = 'JOSE - PEDRO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            boton__jugador1.innerHTML = player1Name + '<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
             dice = document.querySelector('.dice');
         },150)
     }
@@ -126,7 +281,7 @@ function clickJugador2() {
                 boton__jugador2.classList.add('aumentar4');
         }
         setTimeout(() => {
-            boton__jugador2.innerHTML = 'ANA - MARCO<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            boton__jugador2.innerHTML = player2Name + '<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
             dice = document.querySelector('.dice');
         },150)
     }
@@ -158,7 +313,7 @@ function clickJugador3() {
                 boton__jugador3.classList.add('aumentar4');
         }
         setTimeout(() => {
-            boton__jugador3.innerHTML = 'MATEO - MARIA<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            boton__jugador3.innerHTML = player3Name + '<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
             dice = document.querySelector('.dice');
         },150)
     }
@@ -186,7 +341,7 @@ function clickJugador4() {
                 boton__jugador4.classList.add('aumentar4');
         }
         setTimeout(() => {
-            boton__jugador4.innerHTML = 'ESTEFANI - MAYRA<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
+            boton__jugador4.innerHTML = player4Name + '<div class="dice"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></div>';
             dice = document.querySelector('.dice');
         },150)
         
@@ -254,22 +409,44 @@ function clickCancelar() {
     switch(jugadorActivado) {
 
         case 0:
-            let seg = 60;
-            boton__temporizador.innerHTML = '1:00 <span></span>';
-            let intervalo = setInterval(()=>{
-                seg--;
-                boton__temporizador.innerHTML = '0:'+(seg < 10 ? (0 +""+ seg) : seg)+' <span></span>';
-            },1000);
-
-            setTimeout(()=>{
+            if(isTimerActive) {
                 clearInterval(intervalo);
                 intervalo = null;
                 boton__temporizador.innerHTML = 'INICIAR <span></span>';
-                
-                var snd = new Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");  
-                snd.play();
-                
-            },60000);
+                isTimerActive = false;
+                boton__jugador1.disabled = false;
+                boton__jugador2.disabled = false;
+                boton__jugador3.disabled = false;
+                boton__jugador4.disabled = false;
+            }
+            else{
+                boton__jugador1.disabled = true;
+                boton__jugador2.disabled = true;
+                boton__jugador3.disabled = true;
+                boton__jugador4.disabled = true;
+                isTimerActive = true;
+                let seg = 60;
+                boton__temporizador.innerHTML = '1:00 <span></span>';
+                intervalo = setInterval(()=>{
+                    seg--;
+                    boton__temporizador.innerHTML = '0:'+(seg < 10 ? (0 +""+ seg) : seg)+' <span></span>';
+                },1000);
+    
+                setTimeout(()=>{
+                    clearInterval(intervalo);
+                    intervalo = null;
+                    boton__temporizador.innerHTML = 'INICIAR <span></span>';
+                    
+                    var snd = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4nQL7mQVWI6GwRcfsZAcsKkJvxgxEjzFUgfHoSQ9Qq7KNwqHwuB13MA4a1q/DmBrHgPcmjiGoh//EwC5nGPEmS4RcfkVKOhJf+WOgoxJclFz3kgn//dBA+ya1GhurNn8zb//9NNutNuhz31f////9vt///z+IdAEAAAK4LQIAKobHItEIYCGAExBwe8jcToF9zIKrEdDYIuP2MgOWFSE34wYiR5iqQPj0JIeoVdlG4VD4XA67mAcNa1fhzA1jwHuTRxDUQ//iYBczjHiTJcIuPyKlHQkv/LHQUYkuSi57yQT//uggfZNajQ3Vmz+Zt//+mm3Wm3Q576v////+32///5/EOgAAADVghQAAAAA//uQZAUAB1WI0PZugAAAAAoQwAAAEk3nRd2qAAAAACiDgAAAAAAABCqEEQRLCgwpBGMlJkIz8jKhGvj4k6jzRnqasNKIeoh5gI7BJaC1A1AoNBjJgbyApVS4IDlZgDU5WUAxEKDNmmALHzZp0Fkz1FMTmGFl1FMEyodIavcCAUHDWrKAIA4aa2oCgILEBupZgHvAhEBcZ6joQBxS76AgccrFlczBvKLC0QI2cBoCFvfTDAo7eoOQInqDPBtvrDEZBNYN5xwNwxQRfw8ZQ5wQVLvO8OYU+mHvFLlDh05Mdg7BT6YrRPpCBznMB2r//xKJjyyOh+cImr2/4doscwD6neZjuZR4AgAABYAAAABy1xcdQtxYBYYZdifkUDgzzXaXn98Z0oi9ILU5mBjFANmRwlVJ3/6jYDAmxaiDG3/6xjQQCCKkRb/6kg/wW+kSJ5//rLobkLSiKmqP/0ikJuDaSaSf/6JiLYLEYnW/+kXg1WRVJL/9EmQ1YZIsv/6Qzwy5qk7/+tEU0nkls3/zIUMPKNX/6yZLf+kFgAfgGyLFAUwY//uQZAUABcd5UiNPVXAAAApAAAAAE0VZQKw9ISAAACgAAAAAVQIygIElVrFkBS+Jhi+EAuu+lKAkYUEIsmEAEoMeDmCETMvfSHTGkF5RWH7kz/ESHWPAq/kcCRhqBtMdokPdM7vil7RG98A2sc7zO6ZvTdM7pmOUAZTnJW+NXxqmd41dqJ6mLTXxrPpnV8avaIf5SvL7pndPvPpndJR9Kuu8fePvuiuhorgWjp7Mf/PRjxcFCPDkW31srioCExivv9lcwKEaHsf/7ow2Fl1T/9RkXgEhYElAoCLFtMArxwivDJJ+bR1HTKJdlEoTELCIqgEwVGSQ+hIm0NbK8WXcTEI0UPoa2NbG4y2K00JEWbZavJXkYaqo9CRHS55FcZTjKEk3NKoCYUnSQ0rWxrZbFKbKIhOKPZe1cJKzZSaQrIyULHDZmV5K4xySsDRKWOruanGtjLJXFEmwaIbDLX0hIPBUQPVFVkQkDoUNfSoDgQGKPekoxeGzA4DUvnn4bxzcZrtJyipKfPNy5w+9lnXwgqsiyHNeSVpemw4bWb9psYeq//uQZBoABQt4yMVxYAIAAAkQoAAAHvYpL5m6AAgAACXDAAAAD59jblTirQe9upFsmZbpMudy7Lz1X1DYsxOOSWpfPqNX2WqktK0DMvuGwlbNj44TleLPQ+Gsfb+GOWOKJoIrWb3cIMeeON6lz2umTqMXV8Mj30yWPpjoSa9ujK8SyeJP5y5mOW1D6hvLepeveEAEDo0mgCRClOEgANv3B9a6fikgUSu/DmAMATrGx7nng5p5iimPNZsfQLYB2sDLIkzRKZOHGAaUyDcpFBSLG9MCQALgAIgQs2YunOszLSAyQYPVC2YdGGeHD2dTdJk1pAHGAWDjnkcLKFymS3RQZTInzySoBwMG0QueC3gMsCEYxUqlrcxK6k1LQQcsmyYeQPdC2YfuGPASCBkcVMQQqpVJshui1tkXQJQV0OXGAZMXSOEEBRirXbVRQW7ugq7IM7rPWSZyDlM3IuNEkxzCOJ0ny2ThNkyRai1b6ev//3dzNGzNb//4uAvHT5sURcZCFcuKLhOFs8mLAAEAt4UWAAIABAAAAAB4qbHo0tIjVkUU//uQZAwABfSFz3ZqQAAAAAngwAAAE1HjMp2qAAAAACZDgAAAD5UkTE1UgZEUExqYynN1qZvqIOREEFmBcJQkwdxiFtw0qEOkGYfRDifBui9MQg4QAHAqWtAWHoCxu1Yf4VfWLPIM2mHDFsbQEVGwyqQoQcwnfHeIkNt9YnkiaS1oizycqJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");  
+                    if(isTimerActive)snd.play();
+                    isTimerActive = false;
+                    boton__jugador1.disabled = false;
+                    boton__jugador2.disabled = false;
+                    boton__jugador3.disabled = false;
+                    boton__jugador4.disabled = false;
+                    
+                },60000);
+            }
 
 
             break;
@@ -279,7 +456,7 @@ function clickCancelar() {
         //---------------------------------jugador 1
 
         case 1:
-        boton__jugador1.innerHTML = 'JOSE - PEDRO<span></span>';
+        boton__jugador1.innerHTML = player1Name + '<span></span>';
         switch(numPlayers) {
             case 2:
                 boton__jugador1.classList.add('disminuir2');
@@ -322,7 +499,7 @@ function clickCancelar() {
         //---------------------------------jugador 2
 
         case 2:
-        boton__jugador2.innerHTML = 'ANA - MARCO<span></span>';
+        boton__jugador2.innerHTML = player2Name + '<span></span>';
         switch(numPlayers) {
             case 2:
                 boton__jugador2.classList.add('disminuir2');
@@ -368,7 +545,7 @@ function clickCancelar() {
         //---------------------------------jugador 3
 
         case 3:
-            boton__jugador3.innerHTML = 'MATEO - MARIA<span></span>';
+            boton__jugador3.innerHTML = player3Name + '<span></span>';
             switch(numPlayers) {
                 case 3:
                     boton__jugador3.classList.add('disminuir4');
@@ -404,7 +581,7 @@ function clickCancelar() {
         //---------------------------------jugador 4       
         
         case 4:
-            boton__jugador4.innerHTML = 'ESTEFANI - MAYRA<span></span>';
+            boton__jugador4.innerHTML = player4Name + '<span></span>';
             switch(numPlayers) {
                 default:
                     boton__jugador4.classList.add('disminuir4');
@@ -458,6 +635,35 @@ function moveToken(marcador, numSpaces) {
 
     
 }
+
+function moveTokenBack(marcador, numSpaces) {
+    let position = parseInt(marcador.getAttribute('pos'));
+
+    for (let i = 0; i < numSpaces; i++) {
+        setTimeout(() => {
+            position--; // step back
+
+            if ((position >= 0 && position < 2) || (position > 19 && position < 22) || (position > 28 && position < 32) || (position > 33 && position < 36) || (position > 37 && position < 41)) {
+                moveTokenUp(marcador);   // opposite of Down
+            }
+            else if ((position > 1 && position < 5) || (position > 11 && position < 14) || (position > 31 && position < 34) || (position > 40 && position < 44)) {
+                moveTokenRight(marcador); // opposite of Left
+            }
+            else if ((position > 4 && position < 8) || (position > 9 && position < 12) || (position > 13 && position < 17) || (position > 23 && position < 26) || (position > 43 && position < 46)) {
+                moveTokenDown(marcador);  // opposite of Up
+            }
+            else if ((position > 7 && position < 10) || (position > 16 && position < 20) || (position > 21 && position < 24) || (position > 25 && position < 29) || (position > 35 && position < 38)) {
+                moveTokenLeft(marcador);  // opposite of Right
+            }
+
+            marcador.setAttribute('pos', position);
+        }, 350 * i);
+    }
+
+    // Optional: run some callback after all moves are done
+    setTimeout(() => { clickCancelar(); }, 350 * numSpaces);
+}
+
 
 function moveTokenDown(marcador) {
     marcador.classList.add('moveTokenDown');
